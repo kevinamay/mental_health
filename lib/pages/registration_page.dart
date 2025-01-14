@@ -72,7 +72,7 @@ class RegistrationPage extends StatelessWidget {
                     SizedBox(height: 10),
                     TextField(
                       decoration: InputDecoration(
-                        labelText: 'No HP',
+                        labelText: 'Password',
                         border: OutlineInputBorder(),
                         filled: true,
                         fillColor: Colors.white,
