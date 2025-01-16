@@ -4,26 +4,6 @@
     "project_id": "puifix",
     "storage_bucket": "puifix.firebasestorage.app"
   },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:329468218015:android:f4384c2c111c68dbc830aa",
-        "android_client_info": {
-          "package_name": "com.kevina.aplikasipui"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDreoLJjB3Vu4mpO7t8TFBn4OwLa9JkE0Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    }
-  ],
+  "client": [],
   "configuration_version": "1"
 }

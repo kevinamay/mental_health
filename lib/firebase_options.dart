@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'puifix.firebaseapp.com',
     storageBucket: 'puifix.firebasestorage.app',
   );
+
 }
