@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lottie/lottie.dart';  // Menambahkan impor Lottie
-
+import 'package:lottie/lottie.dart'; // Menambahkan impor Lottie
 
 class LoginPage extends StatefulWidget {
   @override
@@ -29,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Lottie.asset('assets/login.json'),
             ),
             SizedBox(height: 20),
-            
+
             // Kotak Login
             Container(
               padding: EdgeInsets.all(20),
@@ -77,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Tombol LOGIN
                   ElevatedButton(
                     onPressed: () {
-                      loginUser(context);  // Memanggil fungsi login
+                      loginUser(context); // Memanggil fungsi login
                     },
                     child: Text(
                       'LOGIN',
@@ -92,7 +91,8 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(10),
                         side: BorderSide(color: Colors.black),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     ),
                   ),
                   SizedBox(height: 10),
@@ -101,7 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                   Text("Don't have an account?"),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/register'); // Pindah ke halaman registrasi
+                      Navigator.pushNamed(
+                          context, '/register'); // Pindah ke halaman registrasi
                     },
                     child: Text(
                       "Create an account",
@@ -132,7 +133,8 @@ class _LoginPageState extends State<LoginPage> {
           .signInWithEmailAndPassword(email: email, password: password);
 
       // Jika login berhasil, arahkan ke halaman SRQ
-      Navigator.pushReplacementNamed(context, '/srq'); // Arahkan ke halaman berikutnya
+      Navigator.pushReplacementNamed(
+          context, '/srq'); // Arahkan ke halaman berikutnya
     } on FirebaseAuthException catch (e) {
       // Jika login gagal, tampilkan pesan kesalahan
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

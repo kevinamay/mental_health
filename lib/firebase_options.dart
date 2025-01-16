@@ -47,6 +47,7 @@ class DefaultFirebaseOptions {
     projectId: 'puifix',
     authDomain: 'puifix.firebaseapp.com',
     storageBucket: 'puifix.firebasestorage.app',
+    databaseURL: 'https://puifix-default-rtdb.firebaseio.com/',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -64,6 +65,7 @@ class DefaultFirebaseOptions {
     projectId: 'puifix',
     storageBucket: 'puifix.firebasestorage.app',
     iosBundleId: 'com.example.aplikasiPui',
+    databaseURL: 'https://puifix-default-rtdb.firebaseio.com/',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
