@@ -7,6 +7,11 @@ class SRQResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Menentukan status gangguan mental berdasarkan jumlah jawaban "YA"
+    String mentalHealthStatus = yesCount >= 6
+        ? 'Kamu mungkin mengalami gangguan mental emosional atau distres yang berpotensi pada gangguan jiwa.'
+        : 'Kamu tidak mengalami gangguan mental emosional atau distres yang berpotensi pada gangguan jiwa.';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -27,7 +32,15 @@ class SRQResultPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 20),
+            // Menampilkan status mental berdasarkan hasil
+            Text(
+              mentalHealthStatus,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, color: Colors.black),
+            ),
             SizedBox(height: 30),
+            // Tampilkan tombol sesuai dengan kondisi
             yesCount >= 10
                 ? ElevatedButton(
                     onPressed: () {
