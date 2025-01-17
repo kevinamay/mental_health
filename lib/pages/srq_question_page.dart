@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'srq_result_page.dart';
 
 class SRQQuestionPage extends StatefulWidget {
@@ -33,12 +35,14 @@ class _SRQQuestionPageState extends State<SRQQuestionPage> {
   int currentQuestionIndex = 0; // Indeks pertanyaan saat ini
   Map<int, String> answers = {}; // Jawaban disimpan di Map
 
+  // Fungsi untuk menyimpan jawaban pengguna
   void _recordAnswer(String answer) {
     setState(() {
       answers[currentQuestionIndex] = answer;
     });
   }
 
+  // Fungsi untuk melanjutkan ke pertanyaan berikutnya
   void _nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       setState(() {
@@ -48,6 +52,9 @@ class _SRQQuestionPageState extends State<SRQQuestionPage> {
       // Hitung jumlah jawaban "YA"
       int yesCount = answers.values.where((answer) => answer == 'YA').length;
 
+      // Menyimpan data ke Firebase setelah selesai
+      _saveResultsToFirebase(yesCount);
+
       // Navigasi ke halaman hasil dengan nilai "yesCount"
       Navigator.push(
         context,
@@ -55,6 +62,55 @@ class _SRQQuestionPageState extends State<SRQQuestionPage> {
           builder: (context) => SRQResultPage(yesCount: yesCount),
         ),
       );
+    }
+  }
+
+  // Fungsi untuk menyimpan hasil SRQ ke Firebase
+  void _saveResultsToFirebase(int yesCount) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      print("Menyimpan data SRQ untuk user dengan UID: ${user.uid}");
+
+      // Menggunakan UID pengguna untuk menyimpan data SRQ
+      final DatabaseReference databaseRef =
+          FirebaseDatabase.instance.ref('srq_results/${user.uid}');
+
+      // Menyimpan hasil jawaban
+      try {
+        await databaseRef.set({
+          'answers': answers, // Jawaban dari Map
+          'yesCount': yesCount, // Jumlah jawaban YA
+          'timestamp': ServerValue.timestamp, // Waktu penyimpanan
+        });
+        print('Hasil SRQ telah disimpan ke Firebase');
+      } catch (error) {
+        print('Error saat menyimpan hasil SRQ: $error');
+      }
+    } else {
+      print('Pengguna belum login, data SRQ tidak disimpan');
+    }
+  }
+
+  // Fungsi untuk membaca hasil SRQ dari Firebase
+  Stream<Map<String, dynamic>> _getResultsFromFirebase() {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final DatabaseReference databaseRef =
+          FirebaseDatabase.instance.ref('srq_results/${user.uid}');
+      return databaseRef.onValue.map((event) {
+        final data = event.snapshot.value as Map<dynamic, dynamic>;
+        return data != null
+            ? {
+                'answers': data['answers'],
+                'yesCount': data['yesCount'],
+                'timestamp': data['timestamp']
+              }
+            : {};
+      });
+    } else {
+      return Stream.empty();
     }
   }
 
